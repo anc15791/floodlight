@@ -16,17 +16,19 @@ import org.slf4j.LoggerFactory;
 
 public class BlacklistMgr {
 
-	
+
 	public static ArrayList<InetAddress> GetIpList() throws FileNotFoundException, UnknownHostException{
 		ArrayList<InetAddress> list = new ArrayList<InetAddress>();
 		Logger logger= LoggerFactory.getLogger(IPBlacklist.class);
-		File file = new File("/home/anc/floodlight/src/main/java/net/floodlightcontroller/ipblacklist/blacklist.txt");
+		String currentDir = System.getProperty("user.dir");
+		logger.info("reading file: "+ currentDir+"/src/main/java/net/floodlightcontroller/ipblacklist/blacklist.txt");
+		File file = new File(currentDir+"/src/main/java/net/floodlightcontroller/ipblacklist/blacklist.txt");
 		if(!file.canRead()) {
 				logger.info("cant read file"+ file.getAbsolutePath());
-				
+
 		}
 		Scanner s = new Scanner(file);
-		
+
 		while (s.hasNextLine()){
 			String line = s.nextLine();
 			if(!line.equals(""))
@@ -34,15 +36,17 @@ public class BlacklistMgr {
 		}
 		s.close();
 		return list;
-		
+
 	}
-	
+
 	public static void AddtoList(String ipaddr) throws IOException{
-		
+
 		Logger logger= LoggerFactory.getLogger(IPBlacklist.class);
-		File file = new File("/home/anc/floodlight/src/main/java/net/floodlightcontroller/ipblacklist/blacklist.txt");
+		String currentDir = System.getProperty("user.dir");
+		logger.info("reading file: "+ currentDir+"/src/main/java/net/floodlightcontroller/ipblacklist/blacklist.txt");
+		File file = new File(currentDir+"/src/main/java/net/floodlightcontroller/ipblacklist/blacklist.txt");
 		if(!file.canRead()) {
-				logger.info("cant read file"+ file.getAbsolutePath());			
+				logger.info("cant read file"+ file.getAbsolutePath());
 		}
 
 		//Here true is to append the content to file
@@ -50,21 +54,23 @@ public class BlacklistMgr {
 		//BufferedWriter writer give better performance
 		BufferedWriter bw = new BufferedWriter(fw);
 		PrintWriter pw = new PrintWriter(bw);
-		
+
 		pw.println("");
 		pw.print(ipaddr);
 
 		pw.close();
-		
-		
+
+
 	}
-	
+
 	public static void RemoveFromList(ArrayList<InetAddress> list) throws IOException{
-		
+
 		Logger logger= LoggerFactory.getLogger(IPBlacklist.class);
-		File file = new File("/home/anc/floodlight/src/main/java/net/floodlightcontroller/ipblacklist/blacklist.txt");
+		String currentDir = System.getProperty("user.dir");
+		logger.info("reading file: "+ currentDir+"/src/main/java/net/floodlightcontroller/ipblacklist/blacklist.txt");
+		File file = new File(currentDir+"/src/main/java/net/floodlightcontroller/ipblacklist/blacklist.txt");
 		if(!file.canRead()) {
-				logger.info("cant read file"+ file.getAbsolutePath());			
+				logger.info("cant read file"+ file.getAbsolutePath());
 		}
 
 		//Here true is to append the content to file
@@ -78,9 +84,9 @@ public class BlacklistMgr {
 		}
 
 		pw.close();
-		
-		
+
+
 	}
-	
-	
+
+
 }
